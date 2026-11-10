@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>本地下载加速 · 设置</title>
+<style>
+  body { margin: 0; padding: 28px 32px; font: 14px/1.6 "Microsoft YaHei", system-ui, sans-serif; color: #222; background: #fafafa; }
+  h1 { font-size: 18px; margin: 0 0 4px; }
+  .hint { color: #777; font-size: 12px; margin-bottom: 22px; }
+  fieldset { border: 1px solid #e2e2e2; border-radius: 8px; background: #fff; padding: 14px 18px; margin: 0 0 16px; }
+  legend { font-weight: 600; padding: 0 6px; color: #444; }
+  .row { display: flex; align-items: center; gap: 12px; margin: 9px 0; }
+  .row > label { width: 136px; flex: none; color: #444; }
+  input[type=text], input[type=number] { flex: 1; padding: 7px 9px; border: 1px solid #d5d5d5; border-radius: 6px; font: inherit; }
+  textarea { width: 100%; box-sizing: border-box; min-height: 74px; padding: 8px 9px; border: 1px solid #d5d5d5; border-radius: 6px; font: 13px/1.6 Consolas, monospace; resize: vertical; }
+  input[type=checkbox] { width: 16px; height: 16px; }
+  .small { color: #888; font-size: 12px; margin: 2px 0 6px 148px; }
+  .actions { display: flex; align-items: center; gap: 12px; }
+  button { padding: 8px 18px; border-radius: 6px; border: 1px solid #d5d5d5; background: #fff; font: inherit; cursor: pointer; }
+  button.primary { background: #1e8e3e; border-color: #1e8e3e; color: #fff; }
+  button:hover { filter: brightness(1.06); }
+  #status { font-size: 13px; }
+  .ok { color: #1e8e3e; }
+  .bad { color: #c0392b; }
+</style>
+</head>
+<body>
+  <h1>本地下载加速 · 设置</h1>
+  <div class="hint">先运行 <code>start-server.cmd</code>，再回来点“测试连接”。</div>
+
+  <fieldset>
+    <legend>本地引擎</legend>
+    <div class="row">
+      <label>服务端口</label>
+      <input type="number" id="port" min="1" max="65535" step="1">
+    </div>
+    <div class="row">
+      <label>保存目录</label>
+      <input type="text" id="dir" placeholder="留空 = 系统下载文件夹，如 D:\Downloads">
+    </div>
+    <div class="row">
+      <label>并发连接数</label>
+      <input type="number" id="conns" min="1" max="32" step="1">
+    </div>
+    <div class="small">16 是稳妥值。遇到 429 / 403 / 连接被重置，降到 8 或 4。</div>
+  </fieldset>
+
+  <fieldset>
+    <legend>接管规则</legend>
+    <div class="row">
+      <label>最小体积 (MB)</label>
+      <input type="number" id="minSizeMB" min="0" max="10000" step="1">
+    </div>
+    <div class="small">小于该体积的下载不接管，交给浏览器，避免小文件来回折腾。</div>
+    <div class="row">
+      <label>携带 Cookie</label>
+      <input type="checkbox" id="useCookies">
+      <span style="color:#777">登录态下载必须开</span>
+    </div>
+    <div class="row">
+      <label>携带 Referer</label>
+      <input type="checkbox" id="useReferer">
+      <span style="color:#777">防盗链站点必须开</span>
+    </div>
+    <div class="row">
+      <label>未知大小也接管</label>
+      <input type="checkbox" id="unknownTakeOver">
+      <span style="color:#777">服务端不给 Content-Length 时仍然转交</span>
+    </div>
+    <div class="row" style="align-items:flex-start">
+      <label>不接管域名</label>
+      <textarea id="blockList" placeholder="每行一个域名，命中的站点保持浏览器原生下载&#10;例如：pan.baidu.com"></textarea>
+    </div>
+  </fieldset>
+
+  <div class="actions">
+    <button class="primary" id="save">保存</button>
+    <button id="test">测试连接</button>
+    <span id="status"></span>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

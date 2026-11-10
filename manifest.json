@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "本地下载加速（Edge 接管）",
+  "version": "1.0.0",
+  "description": "把 Edge 的下载交给本地多连接引擎，突破单连接限速。",
+  "permissions": ["downloads", "cookies", "storage"],
+  "host_permissions": ["http://127.0.0.1/*", "http://localhost/*", "*://*/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "点击切换 加速 开/关"
+  },
+  "options_page": "options.html"
+}

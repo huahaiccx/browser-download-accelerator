@@ -1,0 +1,7 @@
+# 下载中的分块进度文件
+*.dlparts.json
+*.dlparts.json.tmp
+
+# Python
+__pycache__/
+*.pyc
